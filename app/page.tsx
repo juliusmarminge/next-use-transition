@@ -26,8 +26,12 @@ function Example2() {
 
 	return (
 		<form
-			action={(form) => {
-				startTransition(() => action2(form));
+			// `action` makes it work without js
+			action={action2}
+			// onSubmit takes over after hydration and we can provide
+			// loading state during the transition
+			onSubmit={(ev) => {
+				startTransition(() => action2(new FormData(ev.currentTarget)));
 			}}
 		>
 			<fieldset disabled={isPending}>
